@@ -1,0 +1,49 @@
+var world;
+var canvasHeight;
+var canvasWidth;
+var p;
+var O1;
+var O2;
+// var Mouse, Pos, Vel, reqVel1, Acc, reqAcc1;
+
+function setup() {
+	canvasHeight = windowHeight-30;
+	canvasWidth = windowWidth/1.2;
+	createCanvas(canvasWidth, canvasHeight);
+	p = createVector(canvasWidth/2, canvasHeight/2);
+	background(10, 10, 10);
+	world = new World();
+	for (var i = 0; i < 10; i++) {
+		world.addOrganism(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+	}
+	// Mouse = createElement('h2', 'Mouse');
+	// Pos = createElement('h2', 'Pos');
+	// Vel = createElement('h2', 'Vel');
+	// reqVel1 = createElement('h2', 'reqVel');
+	// Acc = createElement('h2', 'Acc');
+	// reqAcc1 = createElement('h2', 'reqAcc');
+	// Mouse.style('color', 'black');
+	// Pos.style('color', 'black');
+	// Vel.style('color', 'black');
+	// Acc.style('color', 'black');
+	// Mouse.position(canvasWidth + 50, windowHeight/2-100);
+	// Pos.position(canvasWidth + 50, windowHeight/2-50);
+	// Vel.position(canvasWidth + 50, windowHeight/2);
+	// reqVel1.position(canvasWidth + 50, windowHeight/2+50);
+	// Acc.position(canvasWidth + 50, windowHeight/2+100);
+	// reqAcc1.position(canvasWidth + 50, windowHeight/2+150);
+}
+
+function draw() {
+	background(10, 10, 10);
+	fill(0, 0, 255);
+	circle(mouseX, mouseY, 20);
+	p.set(mouseX, mouseY);
+  world.driveTo(p);
+	world.simulate();
+	world.show();
+	// Mouse.html("Mouse : (" +  round(mouseX, 3) + ", " + round(mouseY, 3) + ")");
+	// Pos.html("Pos : (" +  round(O.pos.x, 3) + ", " + round(O.pos.y, 3) + ")");
+	// Vel.html("Vel : (" +  round(O.vel.x, 3) + ", " + round(O.vel.y, 3) + ")");
+	// Acc.html("Acc : (" +  round(O.acc.x, 3) + ", " + round(O.acc.y, 3) + ")");
+}

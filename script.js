@@ -17,13 +17,13 @@ function setup() {
 		world.addOrganism(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
 	}
 
-	for (var i = 0; i < 10; i++) {
-		world.addFood(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
-	}
+	// for (var i = 0; i < 10; i++) {
+	// 	world.addFood(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
+	// }
 
-	for (var i = 0; i < 5; i++) {
-		world.addPoison(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
-	}
+	// for (var i = 0; i < 5; i++) {
+	// 	world.addPoison(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
+	// }
 	// Mouse = createElement('h2', 'Mouse');
 	// Pos = createElement('h2', 'Pos');
 	// Vel = createElement('h2', 'Vel');

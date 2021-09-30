@@ -31,17 +31,6 @@ Organism.prototype.applyForce = function(force) {
 	this.acc = force;
 }
 
-Organism.prototype.driveTo = function(target) {
-	var reqVel = target.sub(this.pos);
-	reqVel.normalize();
-	reqVel.mult(this.maxVel);
-	var reqAcc = reqVel.sub(this.vel);
-	reqAcc.limit(this.maxAcc);
-	this.applyForce(reqAcc);
-	// reqVel1.html("reqVel : (" +  round(reqVel.x, 3) + ", " + round(reqVel.y, 3) + ")");
-	// reqAcc1.html("reqAcc : (" +  round(reqAcc.x, 3) + ", " + round(reqAcc.y, 3) + ")");
-}
-
 Organism.prototype.bound = function() {
 	var x = this.pos.x;
 	var y = this.pos.y;
@@ -54,6 +43,42 @@ Organism.prototype.bound = function() {
 		this.applyForce(createVector(0, this.maxAcc/2));
 	} else if (y >= canvasHeight-30) {
 		this.applyForce(createVector(0, -this.maxAcc/2));
+	}
+}
+
+Organism.prototype.driveTo = function(target) {
+	var reqVel = target.sub(this.pos);
+	reqVel.normalize();
+	reqVel.mult(this.maxVel);
+	var reqAcc = reqVel.sub(this.vel);
+	reqAcc.limit(this.maxAcc);
+	this.applyForce(reqAcc);
+}
+
+Organism.prototype.closestParticle = function(particles) {
+	var pos = this.pos.copy();
+	var minDist = Infinity;
+	var minIndex = -1;
+	var dist = 0;
+	for (var i = particles.length - 1; i >= 0; i--) {
+		dist = pos.dist(particles[i].pos)
+		if (dist < minDist) {
+			minDist = dist;
+			minIndex = i;
+		}
+	}
+	return [minIndex, minDist];
+}
+
+Organism.prototype.eat = function(particles) {
+	let [closestFood, dist] = this.closestParticle(particles);
+	if (closestFood > -1) {
+		this.driveTo(particles[closestFood].pos.copy());
+	}
+	if (dist <= this.size) {
+		return closestFood;
+	} else {
+		return -1;
 	}
 }
 

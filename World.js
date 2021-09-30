@@ -49,6 +49,22 @@ World.prototype.bound = function() {
 	}
 }
 
+World.prototype.hunt = function() {
+	foods = this.foods;
+	for (var i = 0; i < this.organisms.length; i++) {
+		eaten = this.organisms[i].eat(foods);
+		if (eaten > -1) {
+			this.foods.splice(eaten, 1);
+			var newF = new Particle(
+				round(random(30, canvasWidth-30)),
+				round(random(30, canvasHeight-30)), 
+				true
+			);
+			this.foods.push(newF);
+		}
+	}
+}
+
 World.prototype.simulate = function() {
 	for (var i = 0; i < this.organisms.length; i++) {
 		this.organisms[i].simulate();

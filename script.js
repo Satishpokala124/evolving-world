@@ -10,16 +10,21 @@ function setup() {
 	canvasHeight = min(windowHeight-30, 1000);
 	canvasWidth = min(windowWidth-30, 1500);
 	createCanvas(canvasWidth, canvasHeight);
-	// p = createVector(canvasWidth/2, canvasHeight/2);
 	background(10, 10, 10);
-	world = new World();
+	world = new World( );
 	for (var i = 0; i < 10; i++) {
-		world.addOrganism(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
+		world.addOrganism(
+			round(random(30, canvasWidth-30)), 
+			round(random(30, canvasHeight-30))
+		);
 	}
 
-	// for (var i = 0; i < 10; i++) {
-	// 	world.addFood(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
-	// }
+	for (var i = 0; i < 50; i++) {
+		world.addFood(
+			round(random(30, canvasWidth-30)),
+			round(random(30, canvasHeight-30))
+		);
+	}
 
 	// for (var i = 0; i < 5; i++) {
 	// 	world.addPoison(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
@@ -51,8 +56,9 @@ function draw() {
 	// circle(canvasWidth-10, canvasHeight-10, 20);
 	// circle(mouseX, mouseY, 20);
 	// p.set(mouseX, mouseY);
-	world.bound();
   // world.driveTo(p);
+	world.hunt();
+	world.bound();
 	world.simulate();
 	world.show();
 	// Mouse.html("Mouse : (" +  round(mouseX, 3) + ", " + round(mouseY, 3) + ")");

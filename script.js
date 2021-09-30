@@ -8,9 +8,9 @@ var O2;
 
 function setup() {
 	canvasHeight = min(windowHeight-30, 1000);
-	canvasWidth = min(windowWidth, 1500);
+	canvasWidth = min(windowWidth-30, 1500);
 	createCanvas(canvasWidth, canvasHeight);
-	p = createVector(canvasWidth/2, canvasHeight/2);
+	// p = createVector(canvasWidth/2, canvasHeight/2);
 	background(10, 10, 10);
 	world = new World();
 	for (var i = 0; i < 10; i++) {
@@ -44,7 +44,7 @@ function setup() {
 
 function draw() {
 	background(10, 10, 10);
-	fill(0, 0, 255);
+	// fill(0, 0, 255);
 	// circle(10, 10, 20);
 	// circle(10, canvasHeight-10, 20);
 	// circle(canvasWidth-10, 10, 20);

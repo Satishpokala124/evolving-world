@@ -7,8 +7,8 @@ var O2;
 // var Mouse, Pos, Vel, reqVel1, Acc, reqAcc1;
 
 function setup() {
-	canvasHeight = windowHeight-30;
-	canvasWidth = windowWidth/1.2;
+	canvasHeight = min(windowHeight-30, 1000);
+	canvasWidth = min(windowWidth/1.2, 1500);
 	createCanvas(canvasWidth, canvasHeight);
 	p = createVector(canvasWidth/2, canvasHeight/2);
 	background(10, 10, 10);
@@ -49,8 +49,8 @@ function draw() {
 	// circle(10, canvasHeight-10, 20);
 	// circle(canvasWidth-10, 10, 20);
 	// circle(canvasWidth-10, canvasHeight-10, 20);
-	circle(mouseX, mouseY, 20);
-	p.set(mouseX, mouseY);
+	// circle(mouseX, mouseY, 20);
+	// p.set(mouseX, mouseY);
 	world.bound();
   // world.driveTo(p);
 	world.simulate();

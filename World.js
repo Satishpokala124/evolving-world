@@ -26,20 +26,26 @@ World.prototype.addPoison = function(x, y) {
 
 
 World.prototype.show = function() {
-	for (var i = 0; i < this.organisms.length; i++) {
-		this.organisms[i].show();
-	}
 	for (var i = 0; i < this.foods.length; i++) {
 		this.foods[i].show();
 	}
 	for (var i = 0; i < this.poisons.length; i++) {
 		this.poisons[i].show();
 	}
+	for (var i = 0; i < this.organisms.length; i++) {
+		this.organisms[i].show();
+	}
 }
 
 World.prototype.driveTo = function(target) {
 	for (var i = 0; i < this.organisms.length; i++) {
 		this.organisms[i].driveTo(target.copy());
+	}
+}
+
+World.prototype.bound = function() {
+	for (var i = 0; i < this.organisms.length; i++) {
+		this.organisms[i].bound();
 	}
 }
 

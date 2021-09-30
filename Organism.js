@@ -1,7 +1,7 @@
 
 function Organism(x, y) {
 	this.pos = createVector(x, y);
-	this.vel = createVector(2, 2);
+	this.vel = createVector(random(-3, 3), random(-3, 3));
 	this.acc = createVector(0, 0);
 	this.maxVel = 5;
 	this.maxAcc = 0.5;
@@ -22,12 +22,12 @@ Organism.prototype.show = function() {
 	push();
 	translate(x, y);
 	rotate(theta);
-	fill(255, 0, 0);
+	fill(81, 255, 0);
 	triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
 	pop();
 }
 
-Organism.prototype.force = function(force) {
+Organism.prototype.applyForce = function(force) {
 	this.acc = force;
 }
 
@@ -37,19 +37,30 @@ Organism.prototype.driveTo = function(target) {
 	reqVel.mult(this.maxVel);
 	var reqAcc = reqVel.sub(this.vel);
 	reqAcc.limit(this.maxAcc);
-	this.force(reqAcc);
+	this.applyForce(reqAcc);
 	// reqVel1.html("reqVel : (" +  round(reqVel.x, 3) + ", " + round(reqVel.y, 3) + ")");
 	// reqAcc1.html("reqAcc : (" +  round(reqAcc.x, 3) + ", " + round(reqAcc.y, 3) + ")");
 }
 
 Organism.prototype.bound = function() {
-	
+	var x = this.pos.x;
+	var y = this.pos.y;
+	if(x <= 30) {
+		this.applyForce(createVector(this.maxAcc/2, 0));
+	} else if (x >= canvasWidth-30) {
+		this.applyForce(createVector(-this.maxAcc/2, 0));
+	}
+	if(y <= 30) {
+		this.applyForce(createVector(0, this.maxAcc/2));
+	} else if (y >= canvasHeight-30) {
+		this.applyForce(createVector(0, -this.maxAcc/2));
+	}
 }
 
 Organism.prototype.simulate = function() {
 	this.vel.add(this.acc);
 	this.vel.limit(this.maxVel);
 	this.pos.add(this.vel);
-	// this.acc.mult(0);
+	this.acc.mult(0);
 }
 

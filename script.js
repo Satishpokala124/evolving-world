@@ -8,7 +8,7 @@ var O2;
 
 function setup() {
 	canvasHeight = min(windowHeight-30, 1000);
-	canvasWidth = min(windowWidth/1.2, 1500);
+	canvasWidth = min(windowWidth, 1500);
 	createCanvas(canvasWidth, canvasHeight);
 	p = createVector(canvasWidth/2, canvasHeight/2);
 	background(10, 10, 10);

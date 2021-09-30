@@ -16,6 +16,14 @@ function setup() {
 	for (var i = 0; i < 10; i++) {
 		world.addOrganism(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
 	}
+
+	for (var i = 0; i < 10; i++) {
+		world.addFood(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+	}
+
+	for (var i = 0; i < 5; i++) {
+		world.addPoison(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+	}
 	// Mouse = createElement('h2', 'Mouse');
 	// Pos = createElement('h2', 'Pos');
 	// Vel = createElement('h2', 'Vel');

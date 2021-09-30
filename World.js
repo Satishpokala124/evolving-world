@@ -1,8 +1,8 @@
 function World() {
 	this.color;
 	this.organisms = [];
-	this.food = [];
-	this.poison = [];
+	this.foods = [];
+	this.poisons = [];
 }
 
 World.prototype.addOrganism = function(x, y) {
@@ -14,15 +14,26 @@ World.prototype.killOrganism = function(index) {
 	this.organisms.splice(index, 1);
 }
 
+World.prototype.addFood = function(x, y) {
+	var newF = new Particle(x, y, true);
+	this.foods.push(newF);
+}
+
+World.prototype.addPoison = function(x, y) {
+	var newP = new Particle(x, y, false);
+	this.poisons.push(newP);
+}
+
+
 World.prototype.show = function() {
 	for (var i = 0; i < this.organisms.length; i++) {
 		this.organisms[i].show();
 	}
-	for (var i = 0; i < this.food.length; i++) {
-		this.food[i].show();
+	for (var i = 0; i < this.foods.length; i++) {
+		this.foods[i].show();
 	}
-	for (var i = 0; i < this.poison.length; i++) {
-		this.poison[i].show();
+	for (var i = 0; i < this.poisons.length; i++) {
+		this.poisons[i].show();
 	}
 }
 

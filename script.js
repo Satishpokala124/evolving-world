@@ -14,15 +14,15 @@ function setup() {
 	background(10, 10, 10);
 	world = new World();
 	for (var i = 0; i < 10; i++) {
-		world.addOrganism(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+		world.addOrganism(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
 	}
 
 	for (var i = 0; i < 10; i++) {
-		world.addFood(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+		world.addFood(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
 	}
 
 	for (var i = 0; i < 5; i++) {
-		world.addPoison(round(random(10, canvasWidth)), round(random(10, canvasHeight)));
+		world.addPoison(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
 	}
 	// Mouse = createElement('h2', 'Mouse');
 	// Pos = createElement('h2', 'Pos');
@@ -45,9 +45,14 @@ function setup() {
 function draw() {
 	background(10, 10, 10);
 	fill(0, 0, 255);
+	// circle(10, 10, 20);
+	// circle(10, canvasHeight-10, 20);
+	// circle(canvasWidth-10, 10, 20);
+	// circle(canvasWidth-10, canvasHeight-10, 20);
 	circle(mouseX, mouseY, 20);
 	p.set(mouseX, mouseY);
-  world.driveTo(p);
+	world.bound();
+  // world.driveTo(p);
 	world.simulate();
 	world.show();
 	// Mouse.html("Mouse : (" +  round(mouseX, 3) + ", " + round(mouseY, 3) + ")");

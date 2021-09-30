@@ -22,7 +22,7 @@ Organism.prototype.show = function() {
 	push();
 	translate(x, y);
 	rotate(theta);
-	fill(81, 255, 0);
+	fill(255, 0, 0);
 	triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
 	pop();
 }

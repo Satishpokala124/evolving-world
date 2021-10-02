@@ -75,7 +75,7 @@ Organism.prototype.eat = function(particles) {
 	if (closestFood > -1) {
 		this.driveTo(particles[closestFood].pos.copy());
 	}
-	if (dist <= this.size) {
+	if (dist <= this.size/2) {
 		return closestFood;
 	} else {
 		return -1;

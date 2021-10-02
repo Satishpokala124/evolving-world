@@ -4,6 +4,7 @@ var canvasWidth;
 var p;
 var O1;
 var O2;
+// var a = 0;
 // var Mouse, Pos, Vel, reqVel1, Acc, reqAcc1;
 
 function setup() {
@@ -11,16 +12,28 @@ function setup() {
 	canvasWidth = min(windowWidth-30, 1500);
 	createCanvas(canvasWidth, canvasHeight);
 	background(10, 10, 10);
-	world = new World( );
+	world = new World();
 	for (var i = 0; i < 10; i++) {
 		world.addOrganism(
 			round(random(30, canvasWidth-30)), 
 			round(random(30, canvasHeight-30))
 		);
-	}
+		}
+	// O1 = new Organism(
+	// 	round(random(30, canvasWidth-30)),
+	// 	round(random(30, canvasHeight-30))
+	// );
+	// p = new Particle(canvasWidth/2, canvasHeight/2, false);
 
 	for (var i = 0; i < 50; i++) {
 		world.addFood(
+			round(random(30, canvasWidth-30)),
+			round(random(30, canvasHeight-30))
+		);
+	}
+
+	for (var i = 0; i < 10; i++) {
+		world.addPoison(
 			round(random(30, canvasWidth-30)),
 			round(random(30, canvasHeight-30))
 		);
@@ -48,7 +61,7 @@ function setup() {
 }
 
 function draw() {
-	background(10, 10, 10);
+	background(30);
 	// fill(0, 0, 255);
 	// circle(10, 10, 20);
 	// circle(10, canvasHeight-10, 20);
@@ -57,10 +70,26 @@ function draw() {
 	// circle(mouseX, mouseY, 20);
 	// p.set(mouseX, mouseY);
   // world.driveTo(p);
+	// if (O1.pos.dist(p.pos) <= 100) {
+	// 	O1.driveAway(p.pos.copy());
+	// 	console.log("pos -> ", O1.pos);
+	// 	console.log("vel -> ", O1.vel);
+	// 	console.log("acc -> ", O1.acc);
+	// 	a = 1;
+	// }
+	// if(a == 1) {
+	// 	console.log("pos -> ", O1.pos);
+	// 	console.log("vel -> ", O1.vel);
+	// 	console.log("acc -> ", O1.acc);
+	// 	a = 0;
+	// }
 	world.hunt();
+	world.survive();
 	world.bound();
 	world.simulate();
 	world.show();
+	// p.show();
+	// world.show();
 	// Mouse.html("Mouse : (" +  round(mouseX, 3) + ", " + round(mouseY, 3) + ")");
 	// Pos.html("Pos : (" +  round(O.pos.x, 3) + ", " + round(O.pos.y, 3) + ")");
 	// Vel.html("Vel : (" +  round(O.vel.x, 3) + ", " + round(O.vel.y, 3) + ")");

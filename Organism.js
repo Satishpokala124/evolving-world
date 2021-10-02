@@ -5,10 +5,12 @@ function Organism(x, y) {
 	this.acc = createVector(0, 0);
 	this.maxVel = 5;
 	this.maxAcc = 0.5;
-	this.health = 10;
+	this.health = 100;
 	this.size = 20;
-	this.foodAttract = 0;
-	this.poisonRepel = 0;
+	this.foodAttractDist = floor(random(20));
+	this.poisonRepelDist = floor(random(20, 50));
+	this.matured = false;
+	this.alive = true;
 }
 
 Organism.prototype.show = function() {
@@ -28,7 +30,7 @@ Organism.prototype.show = function() {
 }
 
 Organism.prototype.applyForce = function(force) {
-	this.acc = force;
+	this.acc.add(force);
 }
 
 Organism.prototype.bound = function() {
@@ -55,6 +57,15 @@ Organism.prototype.driveTo = function(target) {
 	this.applyForce(reqAcc);
 }
 
+Organism.prototype.driveAway = function(target) {
+	var reqVel = this.pos.copy().sub(target);
+	reqVel.normalize();
+	reqVel.mult(this.maxVel);
+	var reqAcc = reqVel.sub(this.vel);
+	reqAcc.limit(this.maxAcc);
+	this.applyForce(reqAcc);
+}
+
 Organism.prototype.closestParticle = function(particles) {
 	var pos = this.pos.copy();
 	var minDist = Infinity;
@@ -70,13 +81,33 @@ Organism.prototype.closestParticle = function(particles) {
 	return [minIndex, minDist];
 }
 
-Organism.prototype.eat = function(particles) {
-	let [closestFood, dist] = this.closestParticle(particles);
+Organism.prototype.eat = function(foods) {
+	let [closestFood, dist] = this.closestParticle(foods);
 	if (closestFood > -1) {
-		this.driveTo(particles[closestFood].pos.copy());
+		this.driveTo(foods[closestFood].pos.copy());
 	}
 	if (dist <= this.size/2) {
+		this.health += 10;
+		if (this.health >= 100) { 
+			this.health = 100;
+			this.matured = true;
+		 }
 		return closestFood;
+	} else {
+		return -1;
+	}
+}
+
+Organism.prototype.saveFrom = function(poisons) {
+	let [closestPoison, dist] = this.closestParticle(poisons);
+	if (closestPoison > -1 && dist<= this.poisonRepelDist) {
+		this.driveAway(poisons[closestPoison].pos.copy());
+	}
+	if (dist <= this.size/2) {
+		if (this.health <= 0) { 
+			this.alive = false
+		 }
+		return closestPoison;
 	} else {
 		return -1;
 	}

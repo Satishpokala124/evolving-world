@@ -26,32 +26,39 @@ World.prototype.addPoison = function(x, y) {
 
 
 World.prototype.show = function() {
-	for (var i = 0; i < this.foods.length; i++) {
+	for (var i = this.foods.length - 1; i >= 0; i--) {
 		this.foods[i].show();
 	}
-	for (var i = 0; i < this.poisons.length; i++) {
+	for (var i = this.poisons.length - 1; i >= 0; i--) {
 		this.poisons[i].show();
 	}
-	for (var i = 0; i < this.organisms.length; i++) {
+	for (var i = this.organisms.length  - 1; i >= 0; i--) {
 		this.organisms[i].show();
 	}
 }
 
 World.prototype.driveTo = function(target) {
-	for (var i = 0; i < this.organisms.length; i++) {
+	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		this.organisms[i].driveTo(target.copy());
 	}
 }
 
+World.prototype.driveAway = function(target) {
+	for (var i = this.organisms.length - 1; i >= 0; i--) {
+		this.organisms[i].driveAway(target.copy());
+	}
+}
+
 World.prototype.bound = function() {
-	for (var i = 0; i < this.organisms.length; i++) {
+	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		this.organisms[i].bound();
 	}
 }
 
 World.prototype.hunt = function() {
 	foods = this.foods;
-	for (var i = 0; i < this.organisms.length; i++) {
+	organisms  = this.organisms;
+	for (var i = organisms.length - 1; i >= 0; i--) {
 		eaten = this.organisms[i].eat(foods);
 		if (eaten > -1) {
 			this.foods.splice(eaten, 1);
@@ -65,8 +72,25 @@ World.prototype.hunt = function() {
 	}
 }
 
+World.prototype.survive = function() {
+	poisons = this.poisons;
+	organisms = this.organisms;
+	for (var i = organisms.length - 1; i >= 0; i--) {
+		eatenPoison = organisms[i].saveFrom(poisons);
+		if (eatenPoison > -1) {
+			this.poisons.splice(eatenPoison, 1);
+			var newP = new Particle(
+				round(random(30, canvasWidth-30)),
+				round(random(30, canvasHeight-30)), 
+				false
+			);
+			this.poisons.push(newP);
+		}
+	}
+}
+
 World.prototype.simulate = function() {
-	for (var i = 0; i < this.organisms.length; i++) {
+	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		this.organisms[i].simulate();
 	}
 	// for (var i = 0; i < this.food.length; i++) {

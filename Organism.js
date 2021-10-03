@@ -14,7 +14,7 @@ function Organism(position, velocity, foodAttractDistance, poisonRepelDistance) 
 		this.vel = createVector(random(-3, 3), random(-3, 3));
 	}
 	this.acc = createVector(0, 0);
-	this.maxVel = 5;
+	this.maxVel = 4;
 	this.maxAcc = 0.5;
 	this.health = 50;
 	this.size = 25;
@@ -145,7 +145,7 @@ Organism.prototype.simulate = function() {
 	this.vel.limit(this.maxVel);
 	this.pos.add(this.vel);
 	this.acc.mult(0);
-	this.health -= 0.1;
+	this.health -= 0.2;
 	if (this.health <= 80) {
 		this.size = 15;
 	} else {

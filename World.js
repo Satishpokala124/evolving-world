@@ -2,6 +2,8 @@ function World() {
 	this.organisms = [];
 	this.foods = [];
 	this.poisons = [];
+	this.maxOrganisms = 50;
+	this.minHealth = 0;
 }
 
 World.prototype.addOrganism = function(position, velocity, foodAttractDistance, poisonRepelDistance) {
@@ -89,6 +91,7 @@ World.prototype.survive = function() {
 }
 
 World.prototype.simulate = function() {
+	var newMinhealth = 100;
 	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		if (this.organisms[i].alive) {
 			if (this.organisms[i].matured) {
@@ -105,7 +108,12 @@ World.prototype.simulate = function() {
 		} else {
 			this.killOrganism(i);
 		}
+		if (this.maxOrganisms < this.organisms.length && this.minHealth == this.organisms[i].health) {
+			 this.killOrganism(i); 
+		}
+		if (this.health <= newMinhealth) { newMinhealth = this.health; }
 	}
+	this.mminHealth = newMinhealth;
 	// for (var i = 0; i < this.food.length; i++) {
 	// 	this.food[i].simulate();
 	// }

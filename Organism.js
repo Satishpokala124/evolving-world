@@ -1,14 +1,33 @@
 
-function Organism(x, y) {
-	this.pos = createVector(x, y);
-	this.vel = createVector(random(-3, 3), random(-3, 3));
+function Organism(position, velocity, foodAttractDistance, poisonRepelDistance) {
+	if (position != null) {
+		this.pos = position.copy();
+	} else {
+		this.pos = createVector(
+			round(random(30, canvasWidth-30)), 
+			round(random(30, canvasHeight-30))
+		);
+	}
+	if (velocity != null) {
+		this.vel = velocity.copy();
+	} else {
+		this.vel = createVector(random(-3, 3), random(-3, 3));
+	}
 	this.acc = createVector(0, 0);
 	this.maxVel = 5;
 	this.maxAcc = 0.5;
-	this.health = 100;
+	this.health = 50;
 	this.size = 20;
-	this.foodAttractDist = floor(random(20));
-	this.poisonRepelDist = floor(random(20, 50));
+	if (foodAttractDistance != null) {
+		this.foodAttractDist = foodAttractDistance;
+	} else {
+		this.foodAttractDist = floor(random(20));
+	}
+	if (poisonRepelDistance != null){
+		this.poisonRepelDist = poisonRepelDistance;
+	} else {
+		this.poisonRepelDist = floor(random(20, 50));
+	}
 	this.matured = false;
 	this.alive = true;
 }
@@ -21,12 +40,14 @@ Organism.prototype.show = function() {
 	var p3 = [this.size/2, this.size/2];
 
 	var theta = this.vel.heading()+PI/2;
+	colorMode(HSB);
 	push();
 	translate(x, y);
 	rotate(theta);
-	fill(255, 0, 0);
+	fill(this.health, 255, 255);
 	triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
 	pop();
+	colorMode(RGB);
 }
 
 Organism.prototype.applyForce = function(force) {
@@ -104,6 +125,7 @@ Organism.prototype.saveFrom = function(poisons) {
 		this.driveAway(poisons[closestPoison].pos.copy());
 	}
 	if (dist <= this.size/2) {
+		this.health -= 50;
 		if (this.health <= 0) { 
 			this.alive = false
 		 }
@@ -118,5 +140,6 @@ Organism.prototype.simulate = function() {
 	this.vel.limit(this.maxVel);
 	this.pos.add(this.vel);
 	this.acc.mult(0);
+	this.health -= 0.1;
 }
 

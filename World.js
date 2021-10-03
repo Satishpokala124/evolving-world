@@ -1,12 +1,11 @@
 function World() {
-	this.color;
 	this.organisms = [];
 	this.foods = [];
 	this.poisons = [];
 }
 
 World.prototype.addOrganism = function(x, y) {
-	var newO = new Organism(x, y);
+	var newO = new Organism(null, null, null, null);
 	this.organisms.push(newO);
 }
 
@@ -91,7 +90,17 @@ World.prototype.survive = function() {
 
 World.prototype.simulate = function() {
 	for (var i = this.organisms.length - 1; i >= 0; i--) {
-		this.organisms[i].simulate();
+		if (this.organisms[i].alive) {
+			if (this.organisms[i].matured) {
+				this.organisms[i].health = 20;
+				this.organisms[i].matured = false;
+				this.addOrganism(this.organisms[i].pos, this.organisms[i].vel, this.organisms[i].foodAttractDist, this.organisms[i].poisonRepelDist);
+				console.log("Birth");
+			}
+			this.organisms[i].simulate();
+		} else {
+			this.killOrganism(i);
+		}
 	}
 	// for (var i = 0; i < this.food.length; i++) {
 	// 	this.food[i].simulate();

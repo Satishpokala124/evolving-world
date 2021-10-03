@@ -13,17 +13,9 @@ function setup() {
 	createCanvas(canvasWidth, canvasHeight);
 	background(10, 10, 10);
 	world = new World();
-	for (var i = 0; i < 10; i++) {
-		world.addOrganism(
-			round(random(30, canvasWidth-30)), 
-			round(random(30, canvasHeight-30))
-		);
-		}
-	// O1 = new Organism(
-	// 	round(random(30, canvasWidth-30)),
-	// 	round(random(30, canvasHeight-30))
-	// );
-	// p = new Particle(canvasWidth/2, canvasHeight/2, false);
+	for (var i = 0; i < 5; i++) {
+		world.addOrganism();
+	}
 
 	for (var i = 0; i < 50; i++) {
 		world.addFood(
@@ -32,16 +24,12 @@ function setup() {
 		);
 	}
 
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 50; i++) {
 		world.addPoison(
 			round(random(30, canvasWidth-30)),
 			round(random(30, canvasHeight-30))
 		);
 	}
-
-	// for (var i = 0; i < 5; i++) {
-	// 	world.addPoison(round(random(30, canvasWidth-30)), round(random(30, canvasHeight-30)));
-	// }
 	// Mouse = createElement('h2', 'Mouse');
 	// Pos = createElement('h2', 'Pos');
 	// Vel = createElement('h2', 'Vel');

@@ -24,7 +24,7 @@ function setup() {
 		);
 	}
 
-	for (var i = 0; i < 50; i++) {
+	for (var i = 0; i < 40; i++) {
 		world.addPoison(
 			round(random(30, canvasWidth-30)),
 			round(random(30, canvasHeight-30))

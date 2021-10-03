@@ -4,8 +4,8 @@ function World() {
 	this.poisons = [];
 }
 
-World.prototype.addOrganism = function(x, y) {
-	var newO = new Organism(null, null, null, null);
+World.prototype.addOrganism = function(position, velocity, foodAttractDistance, poisonRepelDistance) {
+	var newO = new Organism(position, velocity, foodAttractDistance, poisonRepelDistance);
 	this.organisms.push(newO);
 }
 
@@ -31,7 +31,7 @@ World.prototype.show = function() {
 	for (var i = this.poisons.length - 1; i >= 0; i--) {
 		this.poisons[i].show();
 	}
-	for (var i = this.organisms.length  - 1; i >= 0; i--) {
+	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		this.organisms[i].show();
 	}
 }
@@ -94,7 +94,11 @@ World.prototype.simulate = function() {
 			if (this.organisms[i].matured) {
 				this.organisms[i].health = 20;
 				this.organisms[i].matured = false;
-				this.addOrganism(this.organisms[i].pos, this.organisms[i].vel, this.organisms[i].foodAttractDist, this.organisms[i].poisonRepelDist);
+				this.addOrganism(
+					this.organisms[i].pos, this.organisms[i].vel, 
+					this.organisms[i].foodAttractDist, 
+					this.organisms[i].poisonRepelDist
+				);
 				console.log("Birth");
 			}
 			this.organisms[i].simulate();

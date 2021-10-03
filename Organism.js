@@ -17,16 +17,16 @@ function Organism(position, velocity, foodAttractDistance, poisonRepelDistance) 
 	this.maxVel = 5;
 	this.maxAcc = 0.5;
 	this.health = 50;
-	this.size = 20;
+	this.size = 25;
 	if (foodAttractDistance != null) {
 		this.foodAttractDist = foodAttractDistance;
 	} else {
-		this.foodAttractDist = floor(random(20));
+		this.foodAttractDist = floor(random(30, 100));
 	}
 	if (poisonRepelDistance != null){
 		this.poisonRepelDist = poisonRepelDistance;
 	} else {
-		this.poisonRepelDist = floor(random(20, 50));
+		this.poisonRepelDist = floor(random(30, 60));
 	}
 	this.matured = false;
 	this.alive = true;
@@ -38,13 +38,18 @@ Organism.prototype.show = function() {
 	var p1 = [0, -2*this.size];
 	var p2 = [-this.size/2, this.size/2];
 	var p3 = [this.size/2, this.size/2];
-
 	var theta = this.vel.heading()+PI/2;
+	noFill();
+	stroke(0, 255, 0);
+	circle(x, y, 2*this.foodAttractDist);
+	stroke(255, 0, 0);
+	circle(x, y, 2*this.poisonRepelDist);
 	colorMode(HSB);
 	push();
 	translate(x, y);
 	rotate(theta);
 	fill(this.health, 255, 255);
+	stroke(this.health, 255, 255);
 	triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
 	pop();
 	colorMode(RGB);
@@ -104,7 +109,7 @@ Organism.prototype.closestParticle = function(particles) {
 
 Organism.prototype.eat = function(foods) {
 	let [closestFood, dist] = this.closestParticle(foods);
-	if (closestFood > -1) {
+	if (closestFood > -1 && dist <= this.foodAttractDist) {
 		this.driveTo(foods[closestFood].pos.copy());
 	}
 	if (dist <= this.size/2) {
@@ -121,7 +126,7 @@ Organism.prototype.eat = function(foods) {
 
 Organism.prototype.saveFrom = function(poisons) {
 	let [closestPoison, dist] = this.closestParticle(poisons);
-	if (closestPoison > -1 && dist<= this.poisonRepelDist) {
+	if (closestPoison > -1 && dist <= this.poisonRepelDist) {
 		this.driveAway(poisons[closestPoison].pos.copy());
 	}
 	if (dist <= this.size/2) {
@@ -141,5 +146,11 @@ Organism.prototype.simulate = function() {
 	this.pos.add(this.vel);
 	this.acc.mult(0);
 	this.health -= 0.1;
+	if (this.health <= 80) {
+		this.size = 15;
+	} else {
+		this.size = 20;
+	}
+	if (this.health <= 0) { this.alive = false; }
 }
 

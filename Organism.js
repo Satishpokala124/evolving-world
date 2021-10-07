@@ -145,7 +145,7 @@ Organism.prototype.simulate = function() {
 	this.vel.limit(this.maxVel);
 	this.pos.add(this.vel);
 	this.acc.mult(0);
-	this.health -= 0.2;
+	this.health -= 0.15;
 	if (this.health <= 80) {
 		this.size = 15;
 	} else {

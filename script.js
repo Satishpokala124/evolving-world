@@ -13,7 +13,7 @@ function setup() {
 	createCanvas(canvasWidth, canvasHeight);
 	background(10, 10, 10);
 	world = new World();
-	for (var i = 0; i < 5; i++) {
+	for (var i = 0; i < 10; i++) {
 		world.addOrganism();
 	}
 
@@ -24,7 +24,7 @@ function setup() {
 		);
 	}
 
-	for (var i = 0; i < 40; i++) {
+	for (var i = 0; i < 25; i++) {
 		world.addPoison(
 			round(random(30, canvasWidth-30)),
 			round(random(30, canvasHeight-30))

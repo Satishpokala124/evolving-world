@@ -95,7 +95,7 @@ World.prototype.simulate = function() {
 	for (var i = this.organisms.length - 1; i >= 0; i--) {
 		if (this.organisms[i].alive) {
 			if (this.organisms[i].matured) {
-				this.organisms[i].health = 20;
+				this.organisms[i].health = 50;
 				this.organisms[i].matured = false;
 				this.addOrganism(
 					this.organisms[i].pos, this.organisms[i].vel, 
@@ -113,7 +113,7 @@ World.prototype.simulate = function() {
 		}
 		if (this.health <= newMinhealth) { newMinhealth = this.health; }
 	}
-	this.mminHealth = newMinhealth;
+	this.minHealth = newMinhealth;
 	// for (var i = 0; i < this.food.length; i++) {
 	// 	this.food[i].simulate();
 	// }
